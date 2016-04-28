@@ -46,44 +46,44 @@
             alert("Please open Developer Toolbar before using this tool!");
         }
 
-        
-        if(listOfUniqueStyles.length > 0){
+
+        if (listOfUniqueStyles.length > 0) {
             console.log("Total distinct " + propertyType + " used : " + totalUniqueStyle);
             console.log("List of " + propertyType + "  : " + "[" + listOfUniqueStyles.join(" ] [ ") + "]");
             console.log(uniqueStyleList);
-        }else{
+        } else {
             console.log("Either the element entered is not found or the element/property is invalid.");
         }
-        
+
     }
 
     function getFontsList(elems, uniqueStyleList) {
-        for (var k in elems) {
-            if (elems.hasOwnProperty(k)) {
-                if (elems[k]) {
-                    var f;
-                    if (!inputField) {
+        for (var k = 0; k < elems.length; k++) {
+
+            if (elems[k]) {
+                var f;
+                if (!inputField) {
+                    f = document.defaultView.getComputedStyle(elems[k], null).getPropertyValue(propertyType);
+                } else {
+                    if (elems[k].type == 'text' || elems[k].type == 'button' || elems[k].type == 'submit') {
                         f = document.defaultView.getComputedStyle(elems[k], null).getPropertyValue(propertyType);
-                    } else {
-                        if (elems[k].type == 'text' || elems[k].type == 'button' || elems[k].type == 'submit') {
-                            f = document.defaultView.getComputedStyle(elems[k], null).getPropertyValue(propertyType);
-                        }
-                    } 
-
-                    if (f) {
-                        if (uniqueStyleList[f]) {
-                            var tempArr = uniqueStyleList[f];
-                            tempArr.push(elems[k]);
-                            uniqueStyleList[f] = tempArr;
-                        } else {
-                            uniqueStyleList[f] = [elems[k]];
-                            listOfUniqueStyles.push(f);
-                            totalUniqueStyle++;
-                        }
                     }
-
                 }
+
+
+                if (uniqueStyleList[f]) {
+                    var tempArr = uniqueStyleList[f];
+                    tempArr.push(elems[k]);
+                    uniqueStyleList[f] = tempArr;
+                } else {
+                    uniqueStyleList[f] = [elems[k]];
+                    listOfUniqueStyles.push(f);
+                    totalUniqueStyle++;
+                }
+
+
             }
+
         }
     }
 
